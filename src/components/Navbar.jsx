@@ -16,7 +16,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3">
+          <Link to="/clery" className="flex items-center space-x-3">
             <img 
               src="./logo.jpeg"
               alt="CLERY" 
@@ -27,7 +27,7 @@ export default function Navbar() {
           {/* Menu Desktop */}
           <div className="hidden md:flex items-center space-x-8">
             <Link
-              to="/"
+              to="/clery"
               className="text-gray-700 hover:text-primary-600 font-medium transition-colors"
             >
               Inicio
@@ -98,7 +98,7 @@ export default function Navbar() {
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t border-gray-200">
               <Link
-                to="/"
+                to="/clery"
                 className="block px-3 py-2 text-gray-700 hover:text-primary-600 hover:bg-gray-50 rounded-md transition-colors"
                 onClick={() => setIsMenuOpen(false)}
               >

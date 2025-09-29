@@ -16,7 +16,7 @@ function App() {
           <Cart />
           <main>
             <Routes>
-              <Route path="/" element={<Home />} />
+              <Route path="/clery" element={<Home />} />
               <Route path="/products" element={<Products />} />
               <Route path="/categories" element={<Categories />} />
               <Route path="/about" element={<About />} />
@@ -97,7 +97,7 @@ function Footer() {
             <h3 className="text-lg font-semibold mb-4">Enlaces rápidos</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/clery" className="text-gray-300 hover:text-white transition-colors">
                   Inicio
                 </Link>
               </li>

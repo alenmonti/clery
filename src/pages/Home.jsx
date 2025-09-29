@@ -52,12 +52,6 @@ export default function Home() {
               >
                 Ver Catálogo
               </Link>
-              <Link
-                to="/categories"
-                className="inline-block border-2 border-white text-white font-semibold px-8 py-3 rounded-lg hover:bg-white hover:text-primary-600 transition-colors"
-              >
-                Explorar categorías
-              </Link>
             </div>
           </div>
         </div>
