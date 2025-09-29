@@ -92,19 +92,13 @@ export default function Categories() {
                     className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
                   />
                 ) : (
-                  <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-primary-400 to-primary-600">
+                  <div className="w-full h-full flex items-center justify-center bg-gray-100">
                     <svg
-                      className="w-16 h-16 text-white"
-                      fill="none"
-                      stroke="currentColor"
+                      className="w-16 h-16 text-black"
+                      fill="currentColor"
                       viewBox="0 0 24 24"
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
-                      />
+                      <path d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-.67-.33-1.27-.84-1.63L17.63 5.84zM16 7l2 2H5V7h11z" />
                     </svg>
                   </div>
                 )}
@@ -130,17 +124,11 @@ export default function Categories() {
                 <div className="flex items-center mt-4 text-primary-600 text-sm font-medium">
                   <span>Ver productos</span>
                   <svg
-                    className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform"
-                    fill="none"
-                    stroke="currentColor"
+                    className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform text-black"
+                    fill="currentColor"
                     viewBox="0 0 24 24"
                   >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 5l7 7-7 7"
-                    />
+                    <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
                   </svg>
                 </div>
               </div>
@@ -150,17 +138,11 @@ export default function Categories() {
       ) : (
         <div className="text-center py-12">
           <svg
-            className="w-16 h-16 text-gray-400 mx-auto mb-4"
-            fill="none"
-            stroke="currentColor"
+            className="w-16 h-16 text-black mx-auto mb-4"
+            fill="currentColor"
             viewBox="0 0 24 24"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z"
-            />
+            <path d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-.67-.33-1.27-.84-1.63L17.63 5.84zM16 7l2 2H5V7h11z" />
           </svg>
           <h3 className="text-lg font-medium text-gray-900 mb-2">
             No hay categorías disponibles

@@ -1,3 +1,4 @@
+import React from "react";
 import { useState } from "react";
 import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
@@ -15,10 +16,12 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center">
-            <h1 className="text-2xl font-bold text-primary-600">
-              StyleCatalog
-            </h1>
+          <Link to="/" className="flex items-center space-x-3">
+            <img 
+              src="./logo.jpeg"
+              alt="CLERY" 
+              className="h-16 w-16 object-contain"
+            />
           </Link>
 
           {/* Menu Desktop */}
@@ -54,23 +57,17 @@ export default function Navbar() {
             {/* Carrito */}
             <button
               onClick={toggleCart}
-              className="relative p-2 text-gray-700 hover:text-primary-600 transition-colors"
+              className="relative p-2 text-gray-700 hover:text-black transition-colors"
             >
               <svg
                 className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
+                fill="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5M17 21a2 2 0 100-4 2 2 0 000 4zM9 21a2 2 0 100-4 2 2 0 000 4z"
-                />
+                <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.42 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
               </svg>
               {getCartItemsCount() > 0 && (
-                <span className="absolute -top-1 -right-1 bg-red-500 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-black text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
                   {getCartItemsCount()}
                 </span>
               )}
@@ -79,28 +76,17 @@ export default function Navbar() {
             {/* Hamburger Menu */}
             <button
               onClick={toggleMenu}
-              className="md:hidden p-2 text-gray-700 hover:text-primary-600 transition-colors"
+              className="md:hidden p-2 text-gray-700 hover:text-black transition-colors"
             >
               <svg
-                className="w-6 h-6"
-                fill="none"
-                stroke="currentColor"
+                className="w-6 h-6 text-black"
+                fill="currentColor"
                 viewBox="0 0 24 24"
               >
                 {isMenuOpen ? (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M6 18L18 6M6 6l12 12"
-                  />
+                  <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
                 ) : (
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
+                  <path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z" />
                 )}
               </svg>
             </button>

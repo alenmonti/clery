@@ -11,6 +11,12 @@ export default function ProductCard({ product }) {
     // Opcionalmente mostrar una notificación
   };
 
+  const handleBuyNow = () => {
+    const message = `¡Hola CLERY! 👋 Me interesa este producto:\n\n📦 ${product.name}\n💰 Precio: $${product.price}\n\n¿Está disponible? ¿Cómo coordino la compra?`;
+    const whatsappUrl = `https://wa.me/541130526311?text=${encodeURIComponent(message)}`;
+    window.open(whatsappUrl, '_blank');
+  };
+
   const handleImageLoad = () => {
     setImageLoading(false);
   };
@@ -33,17 +39,11 @@ export default function ProductCard({ product }) {
         {imageError ? (
           <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
             <svg
-              className="w-12 h-12 text-gray-400"
-              fill="none"
-              stroke="currentColor"
+              className="w-12 h-12 text-black"
+              fill="currentColor"
               viewBox="0 0 24 24"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"
-              />
+              <path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17l-3.5-3.5 1.41-1.41L9 14.17l6.09-6.09L16.5 9.5 9 17z" />
             </svg>
           </div>
         ) : (
@@ -60,7 +60,7 @@ export default function ProductCard({ product }) {
         {/* Badge de categoría */}
         {product.category && (
           <div className="absolute top-2 left-2">
-            <span className="bg-primary-600 text-white text-xs px-2 py-1 rounded-full">
+            <span className="bg-gray-700 text-white text-xs px-2 py-1 rounded-full">
               {product.category}
             </span>
           </div>
@@ -101,13 +101,31 @@ export default function ProductCard({ product }) {
         </div>
       </div>
 
-      {/* Botón de agregar al carrito */}
-      <button
-        onClick={handleAddToCart}
-        className="w-full mt-4 py-2 px-4 rounded-lg font-medium transition-colors btn-primary hover:shadow-md"
-      >
-        'Agregar al carrito'
-      </button>
+      {/* Botones de acción */}
+      <div className="mt-4 space-y-2">
+        <button
+          onClick={handleBuyNow}
+          disabled={product.stock === 0}
+          className={`w-full py-3 px-4 rounded-none font-medium transition-colors ${
+            product.stock === 0
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              : 'btn-primary'
+          }`}
+        >
+          {product.stock === 0 ? 'Sin stock' : 'COMPRAR AHORA'}
+        </button>
+        <button
+          onClick={handleAddToCart}
+          disabled={product.stock === 0}
+          className={`w-full py-2 px-4 rounded-none font-medium transition-colors ${
+            product.stock === 0
+              ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+              : 'btn-secondary text-sm'
+          }`}
+        >
+          {product.stock === 0 ? 'Sin stock' : 'Agregar al carrito'}
+        </button>
+      </div>
     </div>
   );
 }

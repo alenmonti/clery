@@ -1,6 +1,6 @@
-# StyleCatalog - Catálogo de Ropa 👗
+# CLERY - Moda 👗
 
-Una aplicación web moderna y responsive para mostrar productos de ropa con funcionalidades de carrito de compras, desarrollada con React + Firebase.
+Catálogo online de moda con estilo. Aplicación web moderna y responsive desarrollada con React + Firebase.
 
 ## 🚀 Características
 
@@ -261,7 +261,7 @@ const whatsappUrl = `https://wa.me/TU_NUMERO_AQUI?text=${message}`;
 
 ## 📄 Licencia
 
-MIT © 2025 StyleCatalog
+MIT © 2025 CLERY
 
 ## 🤝 Contribuir
 

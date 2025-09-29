@@ -12,15 +12,15 @@ export default function Cart() {
   } = useCart();
 
   const handleCheckout = () => {
-    // Aquí puedes integrar con Stripe, WhatsApp, etc.
-    const message = `¡Hola! Me interesa comprar:\n\n${cart
+    // Mensaje para WhatsApp de Clery
+    const message = `¡Hola CLERY! 👋 Me interesa comprar:\n\n${cart
       .map(
         (item) =>
-          `• ${item.name} (x${item.quantity}) - $${item.price * item.quantity}`
+          `• ${item.name} (x${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}`
       )
-      .join('\n')}\n\nTotal: $${getCartTotal().toFixed(2)}`;
+      .join('\n')}\n\n💰 Total: $${getCartTotal().toFixed(2)}\n\n📍 ¿Coordino entrega en San Miguel o José C. Paz?`;
     
-    const whatsappUrl = `https://wa.me/1234567890?text=${encodeURIComponent(message)}`;
+    const whatsappUrl = `https://wa.me/541130526311?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
 
@@ -50,17 +50,11 @@ export default function Cart() {
             className="p-2 hover:bg-gray-100 rounded-full transition-colors"
           >
             <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
+              className="w-5 h-5 text-black"
+              fill="currentColor"
               viewBox="0 0 24 24"
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M6 18L18 6M6 6l12 12"
-              />
+              <path d="M19 6.41L17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z" />
             </svg>
           </button>
         </div>
@@ -71,16 +65,10 @@ export default function Cart() {
             <div className="flex flex-col items-center justify-center h-full text-gray-500">
               <svg
                 className="w-16 h-16 mb-4"
-                fill="none"
-                stroke="currentColor"
+                fill="currentColor"
                 viewBox="0 0 24 24"
               >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M3 3h2l.4 2M7 13h10l4-8H5.4m0 0L7 13m0 0l-2.5 5M7 13l2.5 5"
-                />
+                <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.42 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
               </svg>
               <p className="text-lg font-medium">Tu carrito está vacío</p>
               <p className="text-sm">Agrega productos para comenzar</p>

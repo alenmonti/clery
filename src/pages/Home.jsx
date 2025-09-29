@@ -33,21 +33,24 @@ export default function Home() {
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="bg-gradient-to-r from-primary-600 to-primary-700 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+      <section className="hero-gradient">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
-            <h1 className="text-4xl md:text-6xl font-bold mb-6">
-              Descubre tu estilo
+            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gradient">
+              CLERY
             </h1>
-            <p className="text-xl md:text-2xl mb-8 text-primary-100">
-              La moda que refleja tu personalidad, al alcance de un click
+            <p className="text-xl md:text-2xl mb-4 text-gray-700 font-medium">
+              Moda con estilo
+            </p>
+            <p className="text-lg mb-8 text-gray-600 max-w-2xl mx-auto">
+              Envíos a todo el país • Puntos de entrega en San Miguel y José C. Paz
             </p>
             <div className="space-x-4">
               <Link
                 to="/products"
-                className="inline-block bg-white text-primary-600 font-semibold px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors"
+                className="btn-primary inline-block"
               >
-                Ver catálogo
+                Ver Catálogo
               </Link>
               <Link
                 to="/categories"
@@ -61,11 +64,11 @@ export default function Home() {
       </section>
 
       {/* Features Section */}
-      <section className="py-16 bg-white">
+      <section className="py-8 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+          <div className="text-center mb-6">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              ¿Por qué elegir StyleCatalog?
+              ¿Por qué elegir CLERY?
             </h2>
             <p className="text-lg text-gray-600">
               Tu experiencia de compra es nuestra prioridad
@@ -74,19 +77,13 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-gray-100 w-16 h-16 rounded-none flex items-center justify-center mx-auto mb-4">
                 <svg
-                  className="w-8 h-8 text-primary-600"
-                  fill="none"
-                  stroke="currentColor"
+                  className="w-8 h-8 text-black"
+                  fill="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"
-                  />
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"/>
                 </svg>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -98,19 +95,13 @@ export default function Home() {
             </div>
             
             <div className="text-center">
-              <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-gray-100 w-16 h-16 rounded-none flex items-center justify-center mx-auto mb-4">
                 <svg
-                  className="w-8 h-8 text-primary-600"
-                  fill="none"
-                  stroke="currentColor"
+                  className="w-8 h-8 text-black"
+                  fill="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z"
-                  />
+                  <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/>
                 </svg>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -122,19 +113,13 @@ export default function Home() {
             </div>
             
             <div className="text-center">
-              <div className="bg-primary-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
+              <div className="bg-gray-100 w-16 h-16 rounded-none flex items-center justify-center mx-auto mb-4">
                 <svg
-                  className="w-8 h-8 text-primary-600"
-                  fill="none"
-                  stroke="currentColor"
+                  className="w-8 h-8 text-black"
+                  fill="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-                  />
+                  <path d="M7 18c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zM1 2v2h2l3.6 7.59-1.35 2.45c-.16.28-.25.61-.25.96 0 1.1.9 2 2 2h12v-2H7.42c-.14 0-.25-.11-.25-.25l.03-.12L8.1 13h7.45c.75 0 1.41-.42 1.75-1.03L21.7 4H5.21l-.94-2H1zm16 16c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2z"/>
                 </svg>
               </div>
               <h3 className="text-xl font-semibold text-gray-900 mb-2">
@@ -192,17 +177,11 @@ export default function Home() {
             <div className="text-center py-12">
               <div className="text-gray-500">
                 <svg
-                  className="w-16 h-16 mx-auto mb-4"
-                  fill="none"
-                  stroke="currentColor"
+                  className="w-16 h-16 mx-auto mb-4 text-black"
+                  fill="currentColor"
                   viewBox="0 0 24 24"
                 >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M20 7l-8-4-8 4m16 0l-8 4m8-4v10l-8 4m0-10L4 7m8 4v10M4 7v10l8 4"
-                  />
+                  <path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zM10 6a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2v10z" />
                 </svg>
                 <p className="text-lg">No hay productos disponibles</p>
                 <p className="text-sm">Pronto agregaremos nueva mercancía</p>
@@ -211,35 +190,6 @@ export default function Home() {
           )}
         </div>
       </section>
-
-      {/* CTA Section */}
-      <section className="py-16 bg-primary-600">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-          <h2 className="text-3xl font-bold text-white mb-4">
-            ¿Listo para renovar tu guardarropa?
-          </h2>
-          <p className="text-xl text-primary-100 mb-8">
-            Únete a miles de personas que ya confían en StyleCatalog
-          </p>
-          <Link
-            to="/products"
-            className="inline-block bg-white text-primary-600 font-semibold px-8 py-3 rounded-lg hover:bg-gray-100 transition-colors"
-          >
-            Comenzar a comprar
-          </Link>
-        </div>
-      </section>
-
-      {/* Botón de administrador (temporal) */}
-      <div className="fixed bottom-4 right-4 z-50">
-        <button
-          onClick={addSampleProducts}
-          className="bg-red-500 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-red-600 transition-colors text-sm"
-          title="Agregar productos de ejemplo (solo para desarrollo)"
-        >
-          + Productos
-        </button>
-      </div>
     </div>
   );
 }

@@ -1,26 +1,38 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-
-/* Estilos personalizados para la app */
+/* Estilos personalizados para CLERY - Paleta Blanco y Negro */
 @layer base {
   body {
-    @apply font-sans bg-gray-50 text-gray-900;
+    @apply font-sans bg-white text-gray-900;
+    font-family: 'Poppins', sans-serif;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply bg-primary-600 hover:bg-primary-700 text-white font-medium py-2 px-4 rounded-lg transition-colors;
+    @apply bg-black hover:bg-gray-800 text-white font-medium py-3 px-6 rounded-none transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg uppercase tracking-wider;
   }
   
   .btn-secondary {
-    @apply bg-gray-200 hover:bg-gray-300 text-gray-800 font-medium py-2 px-4 rounded-lg transition-colors;
+    @apply bg-white hover:bg-gray-50 text-black font-medium py-3 px-6 rounded-none transition-all duration-300 border-2 border-black uppercase tracking-wider;
   }
   
   .card {
-    @apply bg-white rounded-xl shadow-sm border border-gray-100 p-4;
+    @apply bg-white rounded-none shadow-sm border border-gray-200 p-4 transition-all duration-300 hover:shadow-xl;
+  }
+
+  .hero-gradient {
+    @apply bg-white;
+  }
+
+  .text-gradient {
+    @apply text-black;
+  }
+
+  .social-icon {
+    @apply w-6 h-6 text-gray-600 hover:text-black transition-colors duration-300;
   }
 }
