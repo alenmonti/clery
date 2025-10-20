@@ -37,11 +37,11 @@ function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Logo y descripción */}
           <div className="col-span-1 md:col-span-2">
-            <h2 className="text-3xl font-bold text-white mb-1 tracking-wider text-center">
+            <h2 className="text-4xl text-white mb-8 text-center tracking-wider font-playfair">
               CLÉRY
             </h2>
             <div className="mt-4 text-center mb-4">
-              <h4 className="font-semibold">Seguinos <span className="text-sm text-gray-400">@cleryoficial</span></h4>
+              <h4 className="text-sm ">Seguinos <span className="text-gray-400">@cleryoficial</span></h4>
             </div>
             {/* Redes Sociales */}
             <div className="flex space-x-6 mb-4 justify-center">

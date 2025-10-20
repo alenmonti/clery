@@ -36,7 +36,7 @@ export default function Home() {
       <section className="hero-gradient">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
-            <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gradient">
+            <h1 className="text-5xl md:text-7xl mb-6 text-gradient font-playfair tracking-wider">
               CLÉRY
             </h1>
 
@@ -115,7 +115,7 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-6">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              ¿Por qué elegir CLÉRY?
+              ¿Por qué elegir <span className="font-playfair tracking-wider font-normal text-4xl">CLÉRY</span>?
             </h2>
             <p className="text-lg text-gray-600">
               Tu experiencia de compra es nuestra prioridad
@@ -124,7 +124,7 @@ export default function Home() {
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div className="text-center">
-              <div className="bg-gray-100 w-16 h-16 rounded-none flex items-center justify-center mx-auto mb-4">
+              <div className="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg
                   className="w-8 h-8 text-black"
                   fill="currentColor"
@@ -142,7 +142,7 @@ export default function Home() {
             </div>
             
             <div className="text-center">
-              <div className="bg-gray-100 w-16 h-16 rounded-none flex items-center justify-center mx-auto mb-4">
+              <div className="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg
                   className="w-8 h-8 text-black"
                   fill="currentColor"
@@ -160,7 +160,7 @@ export default function Home() {
             </div>
             
             <div className="text-center">
-              <div className="bg-gray-100 w-16 h-16 rounded-none flex items-center justify-center mx-auto mb-4">
+              <div className="bg-gray-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <svg
                   className="w-8 h-8 text-black"
                   fill="currentColor"

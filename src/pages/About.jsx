@@ -94,7 +94,7 @@ export default function About() {
           </p>
           <div className="flex justify-center space-x-4">
             <a
-              href="https://wa.me/1234567890"
+              href="https://wa.me/1130526311"
               target="_blank"
               rel="noopener noreferrer"
               className="bg-gray-800 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
@@ -102,7 +102,7 @@ export default function About() {
               WhatsApp
             </a>
             <a
-              href="mailto:contacto@CLÉRY.com"
+              href="mailto:clery.sharongianella@gmail.com"
               className="bg-gray-800 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
             >
               Email
