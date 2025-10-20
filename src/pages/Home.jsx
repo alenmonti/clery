@@ -37,13 +37,11 @@ export default function Home() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
           <div className="text-center">
             <h1 className="text-5xl md:text-7xl font-bold mb-6 text-gradient">
-              CLERY
+              CLÉRY
             </h1>
-            <p className="text-xl md:text-2xl mb-4 text-gray-700 font-medium">
-              Moda con estilo
-            </p>
+
             <p className="text-lg mb-8 text-gray-600 max-w-2xl mx-auto">
-              Envíos a todo el país • Puntos de entrega en San Miguel y José C. Paz
+              Envíos a todo el país • Diferentes puntos de entrega
             </p>
             <div className="space-x-4">
               <Link
@@ -52,23 +50,72 @@ export default function Home() {
               >
                 Ver Catálogo
               </Link>
-              <Link
-                to="/categories"
-                className="inline-block border-2 border-white text-white font-semibold px-8 py-3 rounded-lg hover:bg-white hover:text-primary-600 transition-colors"
-              >
-                Explorar categorías
-              </Link>
             </div>
           </div>
         </div>
       </section>
 
-      {/* Features Section */}
+      {/* Featured Products */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-2xl font-bold text-gray-900 mb-4">
+              DESTACADOS
+            </h2>
+          </div>
+          
+          {loading ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+              {[...Array(6)].map((_, index) => (
+                <div key={index} className="bg-white rounded-xl p-4 animate-pulse">
+                  <div className="bg-gray-200 h-48 rounded-lg mb-4"></div>
+                  <div className="bg-gray-200 h-4 rounded mb-2"></div>
+                  <div className="bg-gray-200 h-4 rounded w-3/4 mb-2"></div>
+                  <div className="bg-gray-200 h-6 rounded w-1/2 mb-4"></div>
+                  <div className="bg-gray-200 h-10 rounded"></div>
+                </div>
+              ))}
+            </div>
+          ) : featuredProducts.length > 0 ? (
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                {featuredProducts.map((product) => (
+                  <ProductCard key={product.id} product={product} />
+                ))}
+              </div>
+              <div className="text-center mt-12">
+                <Link
+                  to="/products"
+                  className="btn-primary inline-block"
+                >
+                  Ver todos los productos
+                </Link>
+              </div>
+            </>
+          ) : (
+            <div className="text-center py-12">
+              <div className="text-gray-500">
+                <svg
+                  className="w-16 h-16 mx-auto mb-4 text-black"
+                  fill="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zM10 6a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2v10z" />
+                </svg>
+                <p className="text-lg">No hay productos disponibles</p>
+                <p className="text-sm">Pronto agregaremos nueva mercancía</p>
+              </div>
+            </div>
+          )}
+        </div>
+      </section>
+
+            {/* Features Section */}
       <section className="py-8 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-6">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              ¿Por qué elegir CLERY?
+              ¿Por qué elegir CLÉRY?
             </h2>
             <p className="text-lg text-gray-600">
               Tu experiencia de compra es nuestra prioridad
@@ -130,64 +177,6 @@ export default function Home() {
               </p>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* Featured Products */}
-      <section className="py-16 bg-gray-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">
-              Productos destacados
-            </h2>
-            <p className="text-lg text-gray-600">
-              Lo más popular de nuestra colección
-            </p>
-          </div>
-          
-          {loading ? (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-              {[...Array(6)].map((_, index) => (
-                <div key={index} className="bg-white rounded-xl p-4 animate-pulse">
-                  <div className="bg-gray-200 h-48 rounded-lg mb-4"></div>
-                  <div className="bg-gray-200 h-4 rounded mb-2"></div>
-                  <div className="bg-gray-200 h-4 rounded w-3/4 mb-2"></div>
-                  <div className="bg-gray-200 h-6 rounded w-1/2 mb-4"></div>
-                  <div className="bg-gray-200 h-10 rounded"></div>
-                </div>
-              ))}
-            </div>
-          ) : featuredProducts.length > 0 ? (
-            <>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
-                {featuredProducts.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
-              <div className="text-center mt-12">
-                <Link
-                  to="/products"
-                  className="btn-primary inline-block"
-                >
-                  Ver todos los productos
-                </Link>
-              </div>
-            </>
-          ) : (
-            <div className="text-center py-12">
-              <div className="text-gray-500">
-                <svg
-                  className="w-16 h-16 mx-auto mb-4 text-black"
-                  fill="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zM10 6a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2v10z" />
-                </svg>
-                <p className="text-lg">No hay productos disponibles</p>
-                <p className="text-sm">Pronto agregaremos nueva mercancía</p>
-              </div>
-            </div>
-          )}
         </div>
       </section>
     </div>

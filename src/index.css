@@ -3,7 +3,7 @@
 @tailwind components;
 @tailwind utilities;
 
-/* Estilos personalizados para CLERY - Paleta Blanco y Negro */
+/* Estilos personalizados para CLÉRY - Paleta Blanco y Negro */
 @layer base {
   body {
     @apply font-sans bg-white text-gray-900;

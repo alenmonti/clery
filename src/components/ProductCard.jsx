@@ -12,7 +12,7 @@ export default function ProductCard({ product }) {
   };
 
   const handleBuyNow = () => {
-    const message = `¡Hola CLERY! 👋 Me interesa este producto:\n\n📦 ${product.name}\n💰 Precio: $${product.price}\n\n¿Está disponible? ¿Cómo coordino la compra?`;
+    const message = `¡Hola CLÉRY! 👋 Me interesa este producto:\n\n📦 ${product.name}\n💰 Precio: $${product.price}\n\n¿Está disponible? ¿Cómo coordino la compra?`;
     const whatsappUrl = `https://wa.me/541130526311?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };

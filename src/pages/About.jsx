@@ -3,7 +3,7 @@ export default function About() {
     <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       <div className="text-center mb-12">
         <h1 className="text-4xl font-bold text-gray-900 mb-4">
-          Sobre CLERY
+          Sobre CLÉRY
         </h1>
         <p className="text-xl text-gray-600">
           Conoce la historia detrás de tu tienda de moda favorita
@@ -17,7 +17,7 @@ export default function About() {
               Nuestra misión
             </h2>
             <p className="text-gray-600 leading-relaxed">
-              En CLERY creemos que la moda debe ser accesible para todos. 
+              En CLÉRY creemos que la moda debe ser accesible para todos. 
               Nos dedicamos a ofrecer prendas de calidad que reflejen tu 
               personalidad única, sin comprometer tu presupuesto.
             </p>
@@ -67,7 +67,7 @@ export default function About() {
 
         <div className="bg-gray-800 text-white p-8 rounded-lg text-center mb-12">
           <h2 className="text-2xl font-bold mb-4">
-            ¿Por qué elegir CLERY?
+            ¿Por qué elegir CLÉRY?
           </h2>
           <div className="grid md:grid-cols-3 gap-6">
             <div>
@@ -102,7 +102,7 @@ export default function About() {
               WhatsApp
             </a>
             <a
-              href="mailto:contacto@CLERY.com"
+              href="mailto:contacto@CLÉRY.com"
               className="bg-gray-800 hover:bg-gray-600 text-white px-6 py-3 rounded-lg font-medium transition-colors"
             >
               Email

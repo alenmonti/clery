@@ -19,7 +19,7 @@ export default function Navbar() {
           <Link to="/" className="flex items-center space-x-3">
             <img 
               src="./logo.jpeg"
-              alt="CLERY" 
+              alt="CLÉRY" 
               className="h-16 w-16 object-contain"
             />
           </Link>

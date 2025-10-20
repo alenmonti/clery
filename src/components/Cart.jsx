@@ -12,8 +12,8 @@ export default function Cart() {
   } = useCart();
 
   const handleCheckout = () => {
-    // Mensaje para WhatsApp de Clery
-    const message = `¡Hola CLERY! 👋 Me interesa comprar:\n\n${cart
+    // Mensaje para WhatsApp de Cléry
+    const message = `¡Hola CLÉRY! 👋 Me interesa comprar:\n\n${cart
       .map(
         (item) =>
           `• ${item.name} (x${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}`

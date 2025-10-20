@@ -1,5 +1,5 @@
 #!/bin/bash
-echo "🚀 Deploying CLERY to GitHub Pages..."
+echo "🚀 Deploying CLÉRY to GitHub Pages..."
 
 # Build del proyecto
 echo "📦 Building project..."
