@@ -106,8 +106,7 @@ export default function MobileMenu({ isOpen, onClose }) {
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
         style={{ 
-          height: '100vh',
-          height: '100dvh', // Para navegadores que soportan dvh
+          height: '100dvh', // Para navegadores modernos que soportan dvh
           backgroundColor: '#ffffff'
         }}
       >
