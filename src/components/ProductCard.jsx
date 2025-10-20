@@ -12,7 +12,7 @@ export default function ProductCard({ product }) {
   };
 
   const handleBuyNow = () => {
-    const message = `¡Hola CLÉRY! 👋 Me interesa este producto:\n\n📦 ${product.name}\n💰 Precio: $${product.price}\n\n¿Está disponible? ¿Cómo coordino la compra?`;
+    const message = `¡Hola CLÉRY! 👋 Me interesa este producto:\n\n📦 ${product.nombre}\n💰 Precio: $${product.precio}\n\n¿Está disponible? ¿Cómo coordino la compra?`;
     const whatsappUrl = `https://wa.me/541130526311?text=${encodeURIComponent(message)}`;
     window.open(whatsappUrl, '_blank');
   };
@@ -48,8 +48,8 @@ export default function ProductCard({ product }) {
           </div>
         ) : (
           <img
-            src={product.image}
-            alt={product.name}
+            src={product.imagen}
+            alt={product.nombre}
             className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-200"
             onLoad={handleImageLoad}
             onError={handleImageError}
@@ -79,31 +79,18 @@ export default function ProductCard({ product }) {
       {/* Información del producto */}
       <div className="space-y-2">
         <h3 className="font-semibold text-gray-900 text-lg leading-tight">
-          {product.name}
+          {product.nombre}
         </h3>
         
         {/* Precio */}
         <div className="flex items-center space-x-2 justify-between">
-          {product.originalPrice && product.originalPrice > product.price ? (
-            <>
-              <span className="text-lg font-bold text-gray-900">
-                ${product.price}
-              </span>
-              <span className="text-sm text-gray-500 line-through">
-                ${product.originalPrice}
-              </span>
-            </>
-          ) : (
-            <>
-            <span className="text-lg font-bold text-gray-900">
-              ${product.price}
+          <span className="text-lg font-bold text-gray-900">
+            ${product.precio}
+          </span>
+          {product.categoria && (
+            <span className="bg-gray-500 text-white text-xs px-2 py-1 rounded">
+              {product.categoria}
             </span>
-              {product.category && (
-                  <span className="bg-gray-500 text-white text-xs px-2 py-1 rounded text-white">
-                    {product.category}
-                  </span>
-              )}
-            </>
           )}
         </div>
       </div>

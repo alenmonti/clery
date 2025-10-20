@@ -12,14 +12,22 @@ export default function Home() {
   useEffect(() => {
     const fetchFeaturedProducts = async () => {
       try {
-        // Obtener los primeros 6 productos como destacados
-        const q = query(collection(db, "products"), limit(6));
-        const querySnapshot = await getDocs(q);
-        const products = querySnapshot.docs.map((doc) => ({
+        // Obtener todos los productos y filtrar los destacados
+        const querySnapshot = await getDocs(collection(db, "products"));
+        const allProducts = querySnapshot.docs.map((doc) => ({
           id: doc.id,
           ...doc.data(),
         }));
-        setFeaturedProducts(products);
+        
+        // Filtrar productos destacados, si no hay suficientes, mostrar los primeros 6
+        let featured = allProducts.filter(product => product.destacado === true);
+        if (featured.length < 6) {
+          const remaining = 6 - featured.length;
+          const nonFeatured = allProducts.filter(product => product.destacado !== true);
+          featured = [...featured, ...nonFeatured.slice(0, remaining)];
+        }
+        
+        setFeaturedProducts(featured.slice(0, 6));
       } catch (error) {
         console.error("Error fetching featured products:", error);
       } finally {

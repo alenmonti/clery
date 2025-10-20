@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export default function ProductFilters({ onFilterChange, categories = [] }) {
+export default function ProductFilters({ onFilterChange, sections = [] }) {
   const [filters, setFilters] = useState({
     category: "",
     minPrice: "",
@@ -55,9 +55,9 @@ export default function ProductFilters({ onFilterChange, categories = [] }) {
             className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
           >
             <option value="">Todas las categorías</option>
-            {categories.map((category) => (
-              <option key={category} value={category}>
-                {category}
+            {sections.map((section) => (
+              <option key={section.key} value={section.name}>
+                {section.name}
               </option>
             ))}
           </select>

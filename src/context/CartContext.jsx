@@ -67,7 +67,11 @@ export function CartProvider({ children }) {
   };
 
   const getCartTotal = () => {
-    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
+    return cart.reduce((total, item) => {
+      // Manejar tanto el formato nuevo (precio) como el antiguo (price) para compatibilidad
+      const price = item.precio ? parseFloat(item.precio.replace(/[.$,]/g, '')) : (item.price || 0);
+      return total + price * item.quantity;
+    }, 0);
   };
 
   const getCartItemsCount = () => {

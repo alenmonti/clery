@@ -1,43 +1,68 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 
 export default function MobileMenu({ isOpen, onClose }) {
   const [isProductsSubMenuOpen, setIsProductsSubMenuOpen] = useState(false);
-  const [categories, setCategories] = useState([]);
+  const [isMujerSubMenuOpen, setIsMujerSubMenuOpen] = useState(false);
+  const [isHombreSubMenuOpen, setIsHombreSubMenuOpen] = useState(false);
+  const [sections, setSections] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const navigate = useNavigate();
 
   useEffect(() => {
-    const fetchCategories = async () => {
+    const fetchSections = async () => {
       try {
         const querySnapshot = await getDocs(collection(db, "products"));
         const products = querySnapshot.docs.map((doc) => doc.data());
         
-        // Crear un mapa de categorías únicas
-        const categorySet = new Set();
-        products.forEach((product) => {
-          if (product.category) {
-            categorySet.add(product.category);
-          }
-        });
+        // Generar secciones dinámicas
+        const sectionsData = [
+          { name: 'Nuevos Ingresos', key: 'nuevos', hasSubmenus: false },
+          { name: 'Destacados', key: 'destacados', hasSubmenus: false },
+          { name: 'Gangas', key: 'gangas', hasSubmenus: false },
+          { 
+            name: 'Mujer', 
+            key: 'mujer', 
+            hasSubmenus: true,
+            subcategories: [...new Set(
+              products
+                .filter(p => p.genero === 'Mujer')
+                .map(p => p.categoria)
+                .filter(Boolean)
+            )]
+          },
+          { 
+            name: 'Hombre', 
+            key: 'hombre', 
+            hasSubmenus: true,
+            subcategories: [...new Set(
+              products
+                .filter(p => p.genero === 'Hombre')
+                .map(p => p.categoria)
+                .filter(Boolean)
+            )]
+          },
+          { name: 'Accesorios', key: 'accesorios', hasSubmenus: false }
+        ];
         
-        setCategories(Array.from(categorySet));
+        setSections(sectionsData);
       } catch (error) {
-        console.error("Error fetching categories:", error);
+        console.error("Error fetching sections:", error);
       }
     };
 
     if (isOpen) {
-      fetchCategories();
+      fetchSections();
     }
   }, [isOpen]);
 
   const handleSearchSubmit = (e) => {
     e.preventDefault();
     if (searchQuery.trim()) {
-      // Redirigir a productos con búsqueda
-      window.location.href = `/clery/products?search=${encodeURIComponent(searchQuery.trim())}`;
+      // Navegar a productos con búsqueda usando React Router
+      navigate(`/clery/products?search=${encodeURIComponent(searchQuery.trim())}`);
       onClose();
     }
   };
@@ -46,6 +71,8 @@ export default function MobileMenu({ isOpen, onClose }) {
 
   const handleLinkClick = () => {
     setIsProductsSubMenuOpen(false);
+    setIsMujerSubMenuOpen(false);
+    setIsHombreSubMenuOpen(false);
     onClose();
   };
 
@@ -110,12 +137,12 @@ export default function MobileMenu({ isOpen, onClose }) {
 
           {/* Menú principal */}
           <div className="p-4">
-            <ul className="space-y-1">
+            <ul className="space-y-2">
               {/* INICIO */}
               <li>
                 <Link
                   to="/clery"
-                  className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors font-medium"
+                  className="flex items-center px-4 py-4 text-gray-800 hover:bg-gray-100 rounded-lg transition-colors text-lg tracking-wide"
                   onClick={handleLinkClick}
                 >
                   INICIO
@@ -126,13 +153,13 @@ export default function MobileMenu({ isOpen, onClose }) {
               <li>
                 <button
                   onClick={() => setIsProductsSubMenuOpen(!isProductsSubMenuOpen)}
-                  className="w-full flex items-center justify-between px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors font-medium"
+                  className="w-full flex items-center justify-between px-4 py-4 text-gray-800 hover:bg-gray-100 rounded-lg transition-colors text-lg tracking-wide"
                 >
                   <div className="flex items-center">
                     PRODUCTOS
                   </div>
                   <svg
-                    className={`w-4 h-4 text-black transition-transform duration-200 ${
+                    className={`w-5 h-5 text-black transition-transform duration-200 ${
                       isProductsSubMenuOpen ? 'rotate-180' : ''
                     }`}
                     fill="currentColor"
@@ -142,26 +169,132 @@ export default function MobileMenu({ isOpen, onClose }) {
                   </svg>
                 </button>
 
-                {/* Submenú de categorías */}
+                {/* Submenú de secciones */}
                 {isProductsSubMenuOpen && (
-                  <div className="mt-2 ml-8 space-y-1">
+                  <div className="mt-2 ml-6 space-y-1">
                     <Link
                       to="/clery/products"
-                      className="block w-full text-left px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                      className="block w-full text-left px-4 py-2 text-base text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                       onClick={handleLinkClick}
                     >
-                      Todos los productos
+                      TODOS LOS PRODUCTOS
                     </Link>
-                    {categories.map((category) => (
-                      <Link
-                        key={category}
-                        to={`/clery/products?category=${encodeURIComponent(category)}`}
-                        onClick={handleLinkClick}
-                        className="block w-full text-left px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                    <Link
+                      to="/clery/products?section=nuevos"
+                      className="block w-full text-left px-4 py-2 text-base text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                      onClick={handleLinkClick}
+                    >
+                      NUEVOS INGRESOS
+                    </Link>
+                    <Link
+                      to="/clery/products?section=destacados"
+                      className="block w-full text-left px-4 py-2 text-base text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                      onClick={handleLinkClick}
+                    >
+                      DESTACADOS
+                    </Link>
+                    <Link
+                      to="/clery/products?section=gangas"
+                      className="block w-full text-left px-4 py-2 text-base text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                      onClick={handleLinkClick}
+                    >
+                      GANGAS
+                    </Link>
+                    <Link
+                      to="/clery/products?section=accesorios"
+                      className="block w-full text-left px-4 py-2 text-base text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                      onClick={handleLinkClick}
+                    >
+                      ACCESORIOS
+                    </Link>
+
+                    {/* MUJER - dentro de PRODUCTOS */}
+                    <div>
+                      <button
+                        onClick={() => setIsMujerSubMenuOpen(!isMujerSubMenuOpen)}
+                        className="w-full flex items-center justify-between px-4 py-2 text-base text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                       >
-                        {category}
-                      </Link>
-                    ))}
+                        <div className="flex items-center">
+                          MUJER
+                        </div>
+                        <svg
+                          className={`w-4 h-4 text-gray-600 transition-transform duration-200 ${
+                            isMujerSubMenuOpen ? 'rotate-180' : ''
+                          }`}
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M7 10l5 5 5-5z" />
+                        </svg>
+                      </button>
+
+                      {/* Submenú de Mujer */}
+                      {isMujerSubMenuOpen && (
+                        <div className="mt-1 ml-4 space-y-1">
+                          <Link
+                            to="/clery/products?section=mujer"
+                            className="block w-full text-left px-4 py-1 text-sm text-gray-500 hover:bg-gray-50 rounded transition-colors"
+                            onClick={handleLinkClick}
+                          >
+                            VER TODO MUJER
+                          </Link>
+                          {sections.find(s => s.key === 'mujer')?.subcategories?.map((subcategory) => (
+                            <Link
+                              key={`mujer-${subcategory}`}
+                              to={`/clery/products?section=mujer&subcategory=${encodeURIComponent(subcategory)}`}
+                              onClick={handleLinkClick}
+                              className="block w-full text-left px-4 py-1 text-xs text-gray-400 hover:bg-gray-50 rounded transition-colors"
+                            >
+                              • {subcategory.toUpperCase()}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+
+                    {/* HOMBRE - dentro de PRODUCTOS */}
+                    <div>
+                      <button
+                        onClick={() => setIsHombreSubMenuOpen(!isHombreSubMenuOpen)}
+                        className="w-full flex items-center justify-between px-4 py-2 text-base text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                      >
+                        <div className="flex items-center">
+                          HOMBRE
+                        </div>
+                        <svg
+                          className={`w-4 h-4 text-gray-600 transition-transform duration-200 ${
+                            isHombreSubMenuOpen ? 'rotate-180' : ''
+                          }`}
+                          fill="currentColor"
+                          viewBox="0 0 24 24"
+                        >
+                          <path d="M7 10l5 5 5-5z" />
+                        </svg>
+                      </button>
+
+                      {/* Submenú de Hombre */}
+                      {isHombreSubMenuOpen && (
+                        <div className="mt-1 ml-4 space-y-1">
+                          <Link
+                            to="/clery/products?section=hombre"
+                            className="block w-full text-left px-4 py-1 text-sm text-gray-500 hover:bg-gray-50 rounded transition-colors"
+                            onClick={handleLinkClick}
+                          >
+                            VER TODO HOMBRE
+                          </Link>
+                          {sections.find(s => s.key === 'hombre')?.subcategories?.map((subcategory) => (
+                            <Link
+                              key={`hombre-${subcategory}`}
+                              to={`/clery/products?section=hombre&subcategory=${encodeURIComponent(subcategory)}`}
+                              onClick={handleLinkClick}
+                              className="block w-full text-left px-4 py-1 text-xs text-gray-400 hover:bg-gray-50 rounded transition-colors"
+                            >
+                              • {subcategory.toUpperCase()}
+                            </Link>
+                          ))}
+                        </div>
+                      )}
+                    </div>
                   </div>
                 )}
               </li>
@@ -170,7 +303,7 @@ export default function MobileMenu({ isOpen, onClose }) {
               <li>
                 <Link
                   to="/clery/terms"
-                  className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors font-medium"
+                  className="flex items-center px-4 py-4 text-gray-800 hover:bg-gray-100 rounded-lg transition-colors text-lg tracking-wide"
                   onClick={handleLinkClick}
                 >
                   TÉRMINOS Y CONDICIONES
@@ -181,7 +314,7 @@ export default function MobileMenu({ isOpen, onClose }) {
               <li>
                 <Link
                   to="/clery/about"
-                  className="flex items-center px-4 py-3 text-gray-700 hover:bg-gray-100 rounded-lg transition-colors font-medium"
+                  className="flex items-center px-4 py-4 text-gray-800 hover:bg-gray-100 rounded-lg transition-colors text-lg tracking-wide"
                   onClick={handleLinkClick}
                 >
                   NOSOTROS

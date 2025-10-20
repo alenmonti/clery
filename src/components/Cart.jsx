@@ -15,8 +15,11 @@ export default function Cart() {
     // Mensaje para WhatsApp de Cléry
     const message = `¡Hola CLÉRY! 👋 Me interesa comprar:\n\n${cart
       .map(
-        (item) =>
-          `• ${item.name} (x${item.quantity}) - $${(item.price * item.quantity).toFixed(2)}`
+        (item) => {
+          const name = item.nombre || item.name; // Compatibilidad con ambos formatos
+          const price = item.precio ? parseFloat(item.precio.replace(/[.$,]/g, '')) : (item.price || 0);
+          return `• ${name} (x${item.quantity}) - $${(price * item.quantity).toFixed(2)}`;
+        }
       )
       .join('\n')}\n\n💰 Total: $${getCartTotal().toFixed(2)}\n\n📍 ¿Coordino entrega en San Miguel o José C. Paz?`;
     
@@ -82,17 +85,19 @@ export default function Cart() {
                 >
                   {/* Imagen del producto */}
                   <img
-                    src={item.image}
-                    alt={item.name}
+                    src={item.imagen || item.image}
+                    alt={item.nombre || item.name}
                     className="w-16 h-16 object-cover rounded-lg"
                   />
                   
                   {/* Información del producto */}
                   <div className="flex-1 min-w-0">
                     <h3 className="font-medium text-gray-900 truncate">
-                      {item.name}
+                      {item.nombre || item.name}
                     </h3>
-                    <p className="text-sm text-gray-600">${item.price}</p>
+                    <p className="text-sm text-gray-600">
+                      ${item.precio || item.price}
+                    </p>
                     
                     {/* Controles de cantidad */}
                     <div className="flex items-center space-x-2 mt-2">
@@ -117,7 +122,10 @@ export default function Cart() {
                   {/* Precio total y botón eliminar */}
                   <div className="text-right">
                     <p className="font-semibold text-gray-900">
-                      ${(item.price * item.quantity).toFixed(2)}
+                      ${(() => {
+                        const price = item.precio ? parseFloat(item.precio.replace(/[.$,]/g, '')) : (item.price || 0);
+                        return (price * item.quantity).toFixed(2);
+                      })()}
                     </p>
                     <button
                       onClick={() => removeFromCart(item.id)}

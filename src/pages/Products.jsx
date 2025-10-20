@@ -4,15 +4,54 @@ import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import ProductCard from "../components/ProductCard";
 import ProductFilters from "../components/ProductFilters";
+import ProductUploader from "../components/ProductUploader";
 
 export default function Products() {
   const [products, setProducts] = useState([]);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [categories, setCategories] = useState([]);
+  const [sections, setSections] = useState([]);
   const [currentSearch, setCurrentSearch] = useState("");
-  const [currentCategory, setCurrentCategory] = useState("");
+  const [currentSection, setCurrentSection] = useState("");
+  const [currentSubcategory, setCurrentSubcategory] = useState("");
   const location = useLocation();
+
+  // Generar secciones principales y subcategorías dinámicas
+  const generateSections = (productsData) => {
+    const sections = [
+      { name: 'Nuevos Ingresos', key: 'nuevos' },
+      { name: 'Destacados', key: 'destacados' },
+      { name: 'Gangas', key: 'gangas' },
+      { name: 'Mujer', key: 'mujer' },
+      { name: 'Hombre', key: 'hombre' },
+      { name: 'Accesorios', key: 'accesorios' }
+    ];
+
+    // Generar subcategorías para Mujer y Hombre
+    const mujerCategories = [...new Set(
+      productsData
+        .filter(p => p.genero === 'Mujer')
+        .map(p => p.categoria)
+        .filter(Boolean)
+    )];
+
+    const hombreCategories = [...new Set(
+      productsData
+        .filter(p => p.genero === 'Hombre')
+        .map(p => p.categoria)
+        .filter(Boolean)
+    )];
+
+    return sections.map(section => {
+      if (section.key === 'mujer') {
+        return { ...section, subcategories: mujerCategories };
+      }
+      if (section.key === 'hombre') {
+        return { ...section, subcategories: hombreCategories };
+      }
+      return section;
+    });
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -25,11 +64,9 @@ export default function Products() {
         
         setProducts(productsData);
         
-        // Extraer categorías únicas
-        const uniqueCategories = [
-          ...new Set(productsData.map((product) => product.category).filter(Boolean)),
-        ];
-        setCategories(uniqueCategories);
+        // Generar secciones dinámicamente
+        const sectionsData = generateSections(productsData);
+        setSections(sectionsData);
         
         // Aplicar filtros iniciales basados en URL
         applyInitialFilters(productsData);
@@ -45,19 +82,35 @@ export default function Products() {
 
   const applyInitialFilters = (productsData) => {
     const urlParams = new URLSearchParams(location.search);
-    const category = urlParams.get('category');
+    const section = urlParams.get('section');
+    const subcategory = urlParams.get('subcategory');
     const search = urlParams.get('search');
+    const category = urlParams.get('category'); // Para compatibilidad con enlaces anteriores
     
     // Actualizar estados para mostrar en UI
-    setCurrentCategory(category ? decodeURIComponent(category) : "");
+    setCurrentSection(section ? decodeURIComponent(section) : "");
+    setCurrentSubcategory(subcategory ? decodeURIComponent(subcategory) : "");
     setCurrentSearch(search ? decodeURIComponent(search) : "");
     
     let filtered = [...productsData];
     
-    // Filtrar por categoría si viene en la URL
-    if (category) {
+    // Filtrar por sección
+    if (section) {
+      const sectionKey = decodeURIComponent(section);
+      filtered = filterBySection(filtered, sectionKey);
+    }
+    
+    // Filtrar por subcategoría (para Hombre/Mujer)
+    if (subcategory) {
+      const subcategoryName = decodeURIComponent(subcategory);
+      filtered = filtered.filter(product => product.categoria === subcategoryName);
+    }
+    
+    // Compatibilidad con enlaces antiguos de categorías
+    if (category && !section) {
+      const categoryName = decodeURIComponent(category);
       filtered = filtered.filter((product) => 
-        product.category === decodeURIComponent(category)
+        product.categoria === categoryName
       );
     }
     
@@ -65,49 +118,83 @@ export default function Products() {
     if (search) {
       const searchTerm = decodeURIComponent(search).toLowerCase();
       filtered = filtered.filter((product) =>
-        product.name.toLowerCase().includes(searchTerm) ||
-        (product.category && product.category.toLowerCase().includes(searchTerm))
+        product.nombre.toLowerCase().includes(searchTerm) ||
+        (product.categoria && product.categoria.toLowerCase().includes(searchTerm))
       );
     }
     
     setFilteredProducts(filtered);
   };
 
+  const filterBySection = (products, sectionKey) => {
+    switch (sectionKey) {
+      case 'nuevos':
+        return products.filter(product => product.nuevo === true);
+      case 'destacados':
+        return products.filter(product => product.destacado === true);
+      case 'gangas':
+        return products.filter(product => product.categoria === 'Gangas');
+      case 'accesorios':
+        return products.filter(product => product.categoria === 'Accesorios');
+      case 'mujer':
+        return products.filter(product => product.genero === 'Mujer');
+      case 'hombre':
+        return products.filter(product => product.genero === 'Hombre');
+      default:
+        return products;
+    }
+  };
+
   const handleFilterChange = (filters) => {
     let filtered = [...products];
 
-    // Filtrar por categoría
+    // Filtrar por categoría (ahora usando el campo 'categoria' en español)
     if (filters.category) {
-      filtered = filtered.filter((product) => product.category === filters.category);
+      filtered = filtered.filter((product) => product.categoria === filters.category);
     }
 
-    // Filtrar por precio mínimo
+    // Filtrar por precio mínimo (precio ahora es string, necesitamos parsearlo)
     if (filters.minPrice) {
-      filtered = filtered.filter((product) => product.price >= parseFloat(filters.minPrice));
+      filtered = filtered.filter((product) => {
+        const price = parseFloat(product.precio?.replace(/[.$,]/g, '') || 0);
+        return price >= parseFloat(filters.minPrice);
+      });
     }
 
     // Filtrar por precio máximo
     if (filters.maxPrice) {
-      filtered = filtered.filter((product) => product.price <= parseFloat(filters.maxPrice));
+      filtered = filtered.filter((product) => {
+        const price = parseFloat(product.precio?.replace(/[.$,]/g, '') || 0);
+        return price <= parseFloat(filters.maxPrice);
+      });
     }
 
     // Ordenar
     switch (filters.sortBy) {
       case "price-low":
-        filtered.sort((a, b) => a.price - b.price);
+        filtered.sort((a, b) => {
+          const priceA = parseFloat(a.precio?.replace(/[.$,]/g, '') || 0);
+          const priceB = parseFloat(b.precio?.replace(/[.$,]/g, '') || 0);
+          return priceA - priceB;
+        });
         break;
       case "price-high":
-        filtered.sort((a, b) => b.price - a.price);
+        filtered.sort((a, b) => {
+          const priceA = parseFloat(a.precio?.replace(/[.$,]/g, '') || 0);
+          const priceB = parseFloat(b.precio?.replace(/[.$,]/g, '') || 0);
+          return priceB - priceA;
+        });
         break;
       case "newest":
+        // Priorizar productos marcados como 'nuevo'
         filtered.sort((a, b) => {
-          const dateA = new Date(a.createdAt || 0);
-          const dateB = new Date(b.createdAt || 0);
-          return dateB - dateA;
+          if (a.nuevo && !b.nuevo) return -1;
+          if (!a.nuevo && b.nuevo) return 1;
+          return 0;
         });
         break;
       default: // name
-        filtered.sort((a, b) => a.name.localeCompare(b.name));
+        filtered.sort((a, b) => (a.nombre || '').localeCompare(b.nombre || ''));
     }
 
     setFilteredProducts(filtered);
@@ -145,15 +232,26 @@ export default function Products() {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          PRODUCTOS
+          {currentSection ? (
+            <>
+              {currentSection === 'nuevos' && 'NUEVOS INGRESOS'}
+              {currentSection === 'destacados' && 'DESTACADOS'}
+              {currentSection === 'gangas' && 'GANGAS'}
+              {currentSection === 'mujer' && 'MUJER'}
+              {currentSection === 'hombre' && 'HOMBRE'}
+              {currentSection === 'accesorios' && 'ACCESORIOS'}
+            </>
+          ) : (
+            'PRODUCTOS'
+          )}
         </h1>
         <div className="space-y-2">
           <p className="text-gray-600">
-            Descubre nuestra colección completa
+              Descubre nuestra colección completa
           </p>
           
           {/* Mostrar filtros activos */}
-          {(currentSearch || currentCategory) && (
+          {(currentSearch || currentSection || currentSubcategory) && (
             <div className="flex flex-wrap gap-2 mt-3">
               {currentSearch && (
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-black text-white">
@@ -163,12 +261,25 @@ export default function Products() {
                   Buscando: "{currentSearch}"
                 </span>
               )}
-              {currentCategory && (
+              {currentSection && (
                 <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-700 text-white">
+                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
+                  </svg>
+                  {currentSection === 'nuevos' && 'Nuevos Ingresos'}
+                  {currentSection === 'destacados' && 'Destacados'}
+                  {currentSection === 'gangas' && 'Gangas'}
+                  {currentSection === 'mujer' && 'Mujer'}
+                  {currentSection === 'hombre' && 'Hombre'}
+                  {currentSection === 'accesorios' && 'Accesorios'}
+                </span>
+              )}
+              {currentSubcategory && (
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-indigo-600 text-white">
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-.67-.33-1.27-.84-1.63L17.63 5.84zM16 7l2 2H5V7h11z" />
                   </svg>
-                  Categoría: {currentCategory}
+                  {currentSubcategory}
                 </span>
               )}
               
@@ -184,9 +295,8 @@ export default function Products() {
       {/* Filtros */}
       <ProductFilters
         onFilterChange={handleFilterChange}
-        categories={categories}
+        sections={sections}
       />
-
 
       {/* Grid de productos */}
       {filteredProducts.length > 0 ? (
@@ -212,20 +322,25 @@ export default function Products() {
           </p>
         </div>
       ) : (
-        <div className="text-center py-12">
-          <svg
-            className="w-16 h-16 text-black mx-auto mb-4"
-            fill="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zM10 6a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2v10z" />
-          </svg>
-          <h3 className="text-lg font-medium text-gray-900 mb-2">
-            No hay productos disponibles
-          </h3>
-          <p className="text-gray-600">
-            Pronto agregaremos nueva mercancía a nuestro catálogo
-          </p>
+        <div className="space-y-8">
+          <div className="text-center py-12">
+            <svg
+              className="w-16 h-16 text-black mx-auto mb-4"
+              fill="currentColor"
+              viewBox="0 0 24 24"
+            >
+              <path d="M19 7h-3V6a4 4 0 0 0-8 0v1H5a1 1 0 0 0-1 1v11a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3V8a1 1 0 0 0-1-1zM10 6a2 2 0 0 1 4 0v1h-4V6zm8 13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V9h2v1a1 1 0 0 0 2 0V9h4v1a1 1 0 0 0 2 0V9h2v10z" />
+            </svg>
+            <h3 className="text-lg font-medium text-gray-900 mb-2">
+              No hay productos disponibles
+            </h3>
+            <p className="text-gray-600 mb-6">
+              Para comenzar a probar la aplicación, puedes subir algunos productos de ejemplo
+            </p>
+          </div>
+          
+          {/* Componente para subir productos de prueba */}
+          <ProductUploader />
         </div>
       )}
     </div>
