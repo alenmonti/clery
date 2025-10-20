@@ -93,7 +93,13 @@ export default function ProductCard({ product }) {
             ${product.precio}
           </span>
           {product.categoria && (
-            <span className="text-white text-xs px-2 py-1 rounded-full font-semibold font-sans" style={{ '--bg-opacity': 0.2, backgroundColor: 'rgba(38,166,154, 0.2)', '--text-opacity': 1, color: 'rgba(38,166,154, 1)' }}>
+            <span 
+              className="text-white text-xs px-2 py-1 rounded-full font-bold font-sans" 
+              style={{ 
+                backgroundColor: `${currentTheme.colors.buttonPrimary}33`, // Usa buttonPrimary que es más oscuro
+                color: currentTheme.colors.buttonPrimary
+              }}
+            >
               {product.categoria}
             </span>
           )}

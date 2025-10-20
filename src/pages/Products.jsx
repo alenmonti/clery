@@ -260,7 +260,7 @@ export default function Products() {
                 {currentSection === 'nuevos' && 'Los últimos productos que llegaron'}
                 {currentSection === 'destacados' && 'Nuestras mejores piezas seleccionadas'}
                 {currentSection === 'gangas' && 'Ofertas imperdibles en productos seleccionados'}
-                {currentSection === 'mujer' && 'Moda femenina para todos los estilos'}
+                {currentSection === 'mujer' && 'Moda para todos los estilos'}
                 {currentSection === 'hombre' && 'Estilo masculino moderno y elegante'}
                 {currentSection === 'accesorios' && 'Complementos perfectos para tu look'}
               </>

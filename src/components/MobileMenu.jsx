@@ -263,7 +263,7 @@ export default function MobileMenu({ isOpen, onClose }) {
                               onClick={handleLinkClick}
                               className="block w-full text-left px-4 py-1 text-xs text-gray-400 hover:bg-gray-50 rounded transition-colors"
                             >
-                              • {subcategory.toUpperCase()}
+                              {subcategory.toUpperCase()}
                             </Link>
                           ))}
                         </div>
@@ -307,7 +307,7 @@ export default function MobileMenu({ isOpen, onClose }) {
                               onClick={handleLinkClick}
                               className="block w-full text-left px-4 py-1 text-xs text-gray-400 hover:bg-gray-50 rounded transition-colors"
                             >
-                              • {subcategory.toUpperCase()}
+                              {subcategory.toUpperCase()}
                             </Link>
                           ))}
                         </div>
