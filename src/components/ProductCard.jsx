@@ -1,10 +1,12 @@
 import { useState } from "react";
 import { useCart } from "../context/CartContext";
+import { useTheme } from "../context/ThemeContext";
 
 export default function ProductCard({ product }) {
   const [imageLoading, setImageLoading] = useState(true);
   const [imageError, setImageError] = useState(false);
   const { addToCart } = useCart();
+  const { currentTheme } = useTheme();
 
   const handleAddToCart = () => {
     addToCart(product);
@@ -103,19 +105,51 @@ export default function ProductCard({ product }) {
           className={`w-full py-3 px-4 rounded font-medium transition-colors ${
             product.stock === 0
               ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              : 'btn-primary'
+              : ''
           }`}
+          style={product.stock !== 0 ? {
+            backgroundColor: currentTheme.colors.buttonPrimary,
+            border: 'none',
+            color: currentTheme.colors.buttonText
+          } : {}}
+          onMouseEnter={(e) => {
+            if (product.stock !== 0) {
+              e.target.style.backgroundColor = currentTheme.colors.buttonPrimaryHover;
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (product.stock !== 0) {
+              e.target.style.backgroundColor = currentTheme.colors.buttonPrimary;
+            }
+          }}
         >
           {product.stock === 0 ? 'Sin stock' : 'COMPRAR'}
         </button>
         <button
           onClick={handleAddToCart}
           disabled={product.stock === 0}
-          className={`w-full py-2 px-4 rounded font-medium transition-colors border-none ${
+          className={`w-full py-2 px-4 rounded font-medium transition-colors text-sm ${
             product.stock === 0
               ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-              : 'btn-secondary text-sm'
+              : ''
           }`}
+          style={product.stock !== 0 ? {
+            backgroundColor: 'transparent',
+            border: `2px solid ${currentTheme.colors.buttonPrimary}`,
+            color: currentTheme.colors.buttonPrimary
+          } : {}}
+          onMouseEnter={(e) => {
+            if (product.stock !== 0) {
+              e.target.style.backgroundColor = currentTheme.colors.buttonPrimary;
+              e.target.style.color = currentTheme.colors.buttonText;
+            }
+          }}
+          onMouseLeave={(e) => {
+            if (product.stock !== 0) {
+              e.target.style.backgroundColor = 'transparent';
+              e.target.style.color = currentTheme.colors.buttonPrimary;
+            }
+          }}
         >
           {product.stock === 0 ? 'Sin stock' : 'Agregar al carrito'}
         </button>

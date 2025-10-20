@@ -1,5 +1,6 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
+import { ThemeProvider } from "./context/ThemeContext";
 import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
 import Home from "./pages/Home";
@@ -11,19 +12,21 @@ function App() {
   return (
     <CartProvider>
       <Router>
-        <div className="min-h-screen bg-gray-50">
-          <Navbar />
-          <Cart />
-          <main>
-            <Routes>
-              <Route path="/clery" element={<Home />} />
-              <Route path="/clery/products" element={<Products />} />
-              <Route path="/clery/about" element={<About />} />
-              <Route path="/clery/terms" element={<Terms />} />
-            </Routes>
-          </main>
-          <Footer />
-        </div>
+        <ThemeProvider>
+          <div className="min-h-screen bg-gray-50">
+            <Navbar />
+            <Cart />
+            <main>
+              <Routes>
+                <Route path="/clery" element={<Home />} />
+                <Route path="/clery/products" element={<Products />} />
+                <Route path="/clery/about" element={<About />} />
+                <Route path="/clery/terms" element={<Terms />} />
+              </Routes>
+            </main>
+            <Footer />
+          </div>
+        </ThemeProvider>
       </Router>
     </CartProvider>
   );

@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
+import { useTheme } from "../context/ThemeContext";
 import ProductCard from "../components/ProductCard";
 import ProductFilters from "../components/ProductFilters";
 import ProductUploader from "../components/ProductUploader";
@@ -15,6 +16,7 @@ export default function Products() {
   const [currentSection, setCurrentSection] = useState("");
   const [currentSubcategory, setCurrentSubcategory] = useState("");
   const location = useLocation();
+  const { currentTheme, isMujerTheme, isHombreTheme } = useTheme();
 
   // Generar secciones principales y subcategorías dinámicas
   const generateSections = (productsData) => {
@@ -231,7 +233,10 @@ export default function Products() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
       {/* Header */}
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-2">
+        <h1 
+          className="text-3xl font-bold mb-2"
+          style={{ color: currentTheme.colors.text }}
+        >
           {currentSection ? (
             <>
               {currentSection === 'nuevos' && 'NUEVOS INGRESOS'}
@@ -246,15 +251,32 @@ export default function Products() {
           )}
         </h1>
         <div className="space-y-2">
-          <p className="text-gray-600">
-              Descubre nuestra colección completa
+          <p 
+            className="text-gray-600"
+            style={{ color: currentTheme.colors.textSecondary }}
+          >
+            {currentSection ? (
+              <>
+                {currentSection === 'nuevos' && 'Los últimos productos que llegaron'}
+                {currentSection === 'destacados' && 'Nuestras mejores piezas seleccionadas'}
+                {currentSection === 'gangas' && 'Ofertas imperdibles en productos seleccionados'}
+                {currentSection === 'mujer' && 'Moda femenina para todos los estilos'}
+                {currentSection === 'hombre' && 'Estilo masculino moderno y elegante'}
+                {currentSection === 'accesorios' && 'Complementos perfectos para tu look'}
+              </>
+            ) : (
+              'Descubre nuestra colección completa'
+            )}
           </p>
           
           {/* Mostrar filtros activos */}
           {(currentSearch || currentSection || currentSubcategory) && (
             <div className="flex flex-wrap gap-2 mt-3">
               {currentSearch && (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-black text-white">
+                <span 
+                  className="inline-flex items-center px-3 py-1 rounded-full text-sm"
+                  style={{ backgroundColor: currentTheme.colors.text, color: currentTheme.colors.badgeText }}
+                >
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
                   </svg>
@@ -262,7 +284,10 @@ export default function Products() {
                 </span>
               )}
               {currentSection && (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-700 text-white">
+                <span 
+                  className="inline-flex items-center px-3 py-1 rounded-full text-sm"
+                  style={{ backgroundColor: currentTheme.colors.primary, color: currentTheme.colors.badgeText }}
+                >
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" />
                   </svg>
@@ -275,7 +300,10 @@ export default function Products() {
                 </span>
               )}
               {currentSubcategory && (
-                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-indigo-600 text-white">
+                <span 
+                  className="inline-flex items-center px-3 py-1 rounded-full text-sm"
+                  style={{ backgroundColor: currentTheme.colors.primaryHover, color: currentTheme.colors.badgeText }}
+                >
                   <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
                     <path d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-.67-.33-1.27-.84-1.63L17.63 5.84zM16 7l2 2H5V7h11z" />
                   </svg>
@@ -284,7 +312,10 @@ export default function Products() {
               )}
               
               {/* Contador de resultados */}
-              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700">
+              <span 
+                className="inline-flex items-center px-3 py-1 rounded-full text-sm"
+                style={{ backgroundColor: currentTheme.colors.accent, color: currentTheme.colors.counterText }}
+              >
                 {filteredProducts.length} {filteredProducts.length === 1 ? 'resultado' : 'resultados'}
               </span>
             </div>
