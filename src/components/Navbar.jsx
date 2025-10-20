@@ -29,8 +29,6 @@ export default function Navbar() {
             />
           </Link>
 
-
-
           {/* Carrito y Menu Mobile */}
           <div className="flex items-center space-x-4">
             {/* Carrito */}
