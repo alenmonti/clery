@@ -145,13 +145,13 @@ export default function Cart() {
             <div className="space-y-2">
               <button
                 onClick={handleCheckout}
-                className="w-full btn-primary"
+                className="w-full btn-primary rounded"
               >
                 Finalizar compra
               </button>
               <button
                 onClick={clearCart}
-                className="w-full btn-secondary"
+                className="w-full btn-secondary rounded border-none"
               >
                 Vaciar carrito
               </button>
