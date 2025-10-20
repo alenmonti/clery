@@ -17,6 +17,7 @@ export default {
       fontFamily: {
         sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
         playfair: ['Playfair Display', 'serif'],
+        zilla: ['Zilla Slab', 'serif'],
       }
     },
   },

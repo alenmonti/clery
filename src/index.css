@@ -1,5 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@300;400;500;600;700&display=swap');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -7,8 +8,8 @@
 /* Estilos personalizados para CLÉRY - Paleta Blanco y Negro */
 @layer base {
   body {
-    @apply font-sans bg-white text-gray-900;
-    font-family: 'Poppins', sans-serif;
+    @apply font-zilla bg-white text-gray-900;
+    font-family: 'Zilla Slab', serif;
   }
 }
 
