@@ -42,10 +42,7 @@ export default function MobileMenu({ isOpen, onClose }) {
     }
   };
 
-  const handleCategoryClick = (category) => {
-    window.location.href = `/clery/products?category=${encodeURIComponent(category)}`;
-    onClose();
-  };
+
 
   const handleLinkClick = () => {
     setIsProductsSubMenuOpen(false);
@@ -148,23 +145,22 @@ export default function MobileMenu({ isOpen, onClose }) {
                 {/* Submenú de categorías */}
                 {isProductsSubMenuOpen && (
                   <div className="mt-2 ml-8 space-y-1">
-                    <button
-                      onClick={() => {
-                        window.location.href = '/clery/products';
-                        handleLinkClick();
-                      }}
+                    <Link
+                      to="/clery/products"
                       className="block w-full text-left px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
+                      onClick={handleLinkClick}
                     >
                       Todos los productos
-                    </button>
+                    </Link>
                     {categories.map((category) => (
-                      <button
+                      <Link
                         key={category}
-                        onClick={() => handleCategoryClick(category)}
+                        to={`/clery/products?category=${encodeURIComponent(category)}`}
+                        onClick={handleLinkClick}
                         className="block w-full text-left px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 rounded-lg transition-colors"
                       >
                         {category}
-                      </button>
+                      </Link>
                     ))}
                   </div>
                 )}
