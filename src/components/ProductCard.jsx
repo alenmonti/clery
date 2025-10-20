@@ -27,7 +27,7 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <div className="card hover:shadow-md transition-shadow duration-200 group">
+    <div className="card group rounded-lg border-none shadow-md">
       {/* Imagen del producto */}
       <div className="relative overflow-hidden rounded-lg mb-4 bg-gray-100">
         {imageLoading && (
@@ -58,13 +58,13 @@ export default function ProductCard({ product }) {
         )}
         
         {/* Badge de categoría */}
-        {product.category && (
-          <div className="absolute top-2 left-2">
-            <span className="bg-gray-700 text-white text-xs px-2 py-1 rounded-full">
+        {/* {product.category && (
+          <div className="absolute bottom-2 right-2">
+            <span className="bg-gray-300 text-white text-xs px-2 py-1 rounded">
               {product.category}
             </span>
           </div>
-        )}
+        )} */}
         
         {/* Badge de descuento */}
         {product.discount && (
@@ -83,7 +83,7 @@ export default function ProductCard({ product }) {
         </h3>
         
         {/* Precio */}
-        <div className="flex items-center space-x-2">
+        <div className="flex items-center space-x-2 justify-between">
           {product.originalPrice && product.originalPrice > product.price ? (
             <>
               <span className="text-lg font-bold text-gray-900">
@@ -94,9 +94,16 @@ export default function ProductCard({ product }) {
               </span>
             </>
           ) : (
+            <>
             <span className="text-lg font-bold text-gray-900">
               ${product.price}
             </span>
+              {product.category && (
+                  <span className="bg-gray-500 text-white text-xs px-2 py-1 rounded text-white">
+                    {product.category}
+                  </span>
+              )}
+            </>
           )}
         </div>
       </div>
@@ -106,18 +113,18 @@ export default function ProductCard({ product }) {
         <button
           onClick={handleBuyNow}
           disabled={product.stock === 0}
-          className={`w-full py-3 px-4 rounded-none font-medium transition-colors ${
+          className={`w-full py-3 px-4 rounded font-medium transition-colors ${
             product.stock === 0
               ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
               : 'btn-primary'
           }`}
         >
-          {product.stock === 0 ? 'Sin stock' : 'COMPRAR AHORA'}
+          {product.stock === 0 ? 'Sin stock' : 'COMPRAR'}
         </button>
         <button
           onClick={handleAddToCart}
           disabled={product.stock === 0}
-          className={`w-full py-2 px-4 rounded-none font-medium transition-colors ${
+          className={`w-full py-2 px-4 rounded font-medium transition-colors border-none ${
             product.stock === 0
               ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
               : 'btn-secondary text-sm'

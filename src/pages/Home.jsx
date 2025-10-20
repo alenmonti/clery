@@ -46,7 +46,7 @@ export default function Home() {
             <div className="space-x-4">
               <Link
                 to="/products"
-                className="btn-primary inline-block"
+                className="btn-primary inline-block rounded-lg"
               >
                 Ver Catálogo
               </Link>
