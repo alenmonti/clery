@@ -30,7 +30,7 @@ export default function ProductFilters({ onFilterChange, categories = [] }) {
   const hasActiveFilters = filters.category || filters.minPrice || filters.maxPrice || filters.sortBy !== "name";
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-6 hidden">
       {/* Toggle filters en mobile */}
       <div className="flex items-center justify-between md:hidden mb-4">
         <h3 className="font-medium text-gray-900">Filtros</h3>

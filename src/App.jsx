@@ -4,8 +4,8 @@ import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
-import Categories from "./pages/Categories";
 import About from "./pages/About";
+import Terms from "./pages/Terms";
 
 function App() {
   return (
@@ -17,9 +17,9 @@ function App() {
           <main>
             <Routes>
               <Route path="/clery" element={<Home />} />
-              <Route path="/products" element={<Products />} />
-              <Route path="/categories" element={<Categories />} />
-              <Route path="/about" element={<About />} />
+              <Route path="/clery/products" element={<Products />} />
+              <Route path="/clery/about" element={<About />} />
+              <Route path="/clery/terms" element={<Terms />} />
             </Routes>
           </main>
           <Footer />
@@ -95,22 +95,22 @@ function Footer() {
             <h3 className="text-lg font-semibold mb-4">Enlaces rápidos</h3>
             <ul className="space-y-2">
               <li>
-                <Link to="/" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/clery" className="text-gray-300 hover:text-white transition-colors">
                   Inicio
                 </Link>
               </li>
               <li>
-                <Link to="/products" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/clery/products" className="text-gray-300 hover:text-white transition-colors">
                   Productos
                 </Link>
               </li>
               <li>
-                <Link to="/terms" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/clery/terms" className="text-gray-300 hover:text-white transition-colors">
                   Términos y condiciones
                 </Link>
               </li>
               <li>
-                <Link to="/about" className="text-gray-300 hover:text-white transition-colors">
+                <Link to="/clery/about" className="text-gray-300 hover:text-white transition-colors">
                   Nosotros
                 </Link>
               </li>

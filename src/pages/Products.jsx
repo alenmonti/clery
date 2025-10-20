@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { collection, getDocs } from "firebase/firestore";
 import { db } from "../firebase";
 import ProductCard from "../components/ProductCard";
@@ -9,6 +10,9 @@ export default function Products() {
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [categories, setCategories] = useState([]);
+  const [currentSearch, setCurrentSearch] = useState("");
+  const [currentCategory, setCurrentCategory] = useState("");
+  const location = useLocation();
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -20,13 +24,15 @@ export default function Products() {
         }));
         
         setProducts(productsData);
-        setFilteredProducts(productsData);
         
         // Extraer categorías únicas
         const uniqueCategories = [
           ...new Set(productsData.map((product) => product.category).filter(Boolean)),
         ];
         setCategories(uniqueCategories);
+        
+        // Aplicar filtros iniciales basados en URL
+        applyInitialFilters(productsData);
       } catch (error) {
         console.error("Error fetching products:", error);
       } finally {
@@ -35,7 +41,37 @@ export default function Products() {
     };
 
     fetchProducts();
-  }, []);
+  }, [location]);
+
+  const applyInitialFilters = (productsData) => {
+    const urlParams = new URLSearchParams(location.search);
+    const category = urlParams.get('category');
+    const search = urlParams.get('search');
+    
+    // Actualizar estados para mostrar en UI
+    setCurrentCategory(category ? decodeURIComponent(category) : "");
+    setCurrentSearch(search ? decodeURIComponent(search) : "");
+    
+    let filtered = [...productsData];
+    
+    // Filtrar por categoría si viene en la URL
+    if (category) {
+      filtered = filtered.filter((product) => 
+        product.category === decodeURIComponent(category)
+      );
+    }
+    
+    // Filtrar por búsqueda si viene en la URL
+    if (search) {
+      const searchTerm = decodeURIComponent(search).toLowerCase();
+      filtered = filtered.filter((product) =>
+        product.name.toLowerCase().includes(searchTerm) ||
+        (product.category && product.category.toLowerCase().includes(searchTerm))
+      );
+    }
+    
+    setFilteredProducts(filtered);
+  };
 
   const handleFilterChange = (filters) => {
     let filtered = [...products];
@@ -109,11 +145,40 @@ export default function Products() {
       {/* Header */}
       <div className="mb-8">
         <h1 className="text-3xl font-bold text-gray-900 mb-2">
-          Catálogo de productos
+          PRODUCTOS
         </h1>
-        <p className="text-gray-600">
-          Descubre nuestra colección completa de {products.length} productos
-        </p>
+        <div className="space-y-2">
+          <p className="text-gray-600">
+            Descubre nuestra colección completa
+          </p>
+          
+          {/* Mostrar filtros activos */}
+          {(currentSearch || currentCategory) && (
+            <div className="flex flex-wrap gap-2 mt-3">
+              {currentSearch && (
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-black text-white">
+                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
+                  </svg>
+                  Buscando: "{currentSearch}"
+                </span>
+              )}
+              {currentCategory && (
+                <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-700 text-white">
+                  <svg className="w-4 h-4 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                    <path d="M17.63 5.84C17.27 5.33 16.67 5 16 5L5 5.01C3.9 5.01 3 5.9 3 7v10c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V9c0-.67-.33-1.27-.84-1.63L17.63 5.84zM16 7l2 2H5V7h11z" />
+                  </svg>
+                  Categoría: {currentCategory}
+                </span>
+              )}
+              
+              {/* Contador de resultados */}
+              <span className="inline-flex items-center px-3 py-1 rounded-full text-sm bg-gray-100 text-gray-700">
+                {filteredProducts.length} {filteredProducts.length === 1 ? 'resultado' : 'resultados'}
+              </span>
+            </div>
+          )}
+        </div>
       </div>
 
       {/* Filtros */}
@@ -122,12 +187,6 @@ export default function Products() {
         categories={categories}
       />
 
-      {/* Resultados */}
-      <div className="mb-6">
-        <p className="text-gray-600">
-          Mostrando {filteredProducts.length} de {products.length} productos
-        </p>
-      </div>
 
       {/* Grid de productos */}
       {filteredProducts.length > 0 ? (

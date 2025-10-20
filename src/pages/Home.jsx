@@ -45,7 +45,7 @@ export default function Home() {
             </p>
             <div className="space-x-4">
               <Link
-                to="/products"
+                to="/clery/products"
                 className="btn-primary inline-block rounded-lg"
               >
                 Ver Catálogo
@@ -85,7 +85,7 @@ export default function Home() {
               </div>
               <div className="text-center mt-12">
                 <Link
-                  to="/products"
+                  to="/clery/products"
                   className="btn-primary inline-block"
                 >
                   Ver todos los productos
