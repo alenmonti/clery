@@ -54,7 +54,7 @@ export default function Home() {
             <div className="space-x-4">
               <Link
                 to="/clery/products"
-                className="btn-primary inline-block rounded-lg"
+                className="btn-primary inline-block"
               >
                 Ver Catálogo
               </Link>

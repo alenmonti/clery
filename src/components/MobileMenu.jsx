@@ -140,11 +140,11 @@ export default function MobileMenu({ isOpen, onClose }) {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Buscar productos..."
-                className="flex-1 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-black focus:border-black text-sm"
+                className="flex-1 px-3 py-2 border border-gray-300 rounded focus:outline-none focus:ring-2 focus:ring-black focus:border-black text-sm"
               />
               <button
                 type="submit"
-                className="px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-800 transition-colors"
+                className="px-4 py-2 bg-black text-white rounded hover:bg-gray-800 transition-colors"
               >
                 <svg className="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
                   <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0016 9.5 6.5 6.5 0 109.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z" />
@@ -160,7 +160,7 @@ export default function MobileMenu({ isOpen, onClose }) {
               <li>
                 <Link
                   to="/clery"
-                  className="flex items-center px-4 py-4 text-gray-800 hover:bg-gray-100 rounded-lg transition-colors text-lg tracking-wide"
+                  className="flex items-center px-4 py-4 text-gray-800 hover:bg-gray-100 rounded transition-colors text-lg tracking-wide"
                   onClick={handleLinkClick}
                 >
                   INICIO
@@ -171,7 +171,7 @@ export default function MobileMenu({ isOpen, onClose }) {
               <li>
                 <button
                   onClick={() => setIsProductsSubMenuOpen(!isProductsSubMenuOpen)}
-                  className="w-full flex items-center justify-between px-4 py-4 text-gray-800 hover:bg-gray-100 rounded-lg transition-colors text-lg tracking-wide"
+                  className="w-full flex items-center justify-between px-4 py-4 text-gray-800 hover:bg-gray-100 rounded transition-colors text-lg tracking-wide"
                 >
                   <div className="flex items-center">
                     PRODUCTOS

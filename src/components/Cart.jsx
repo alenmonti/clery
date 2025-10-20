@@ -100,13 +100,13 @@ export default function Cart() {
               {cart.map((item) => (
                 <div
                   key={item.id}
-                  className="flex items-center space-x-3 bg-gray-50 rounded-lg p-3"
+                  className="flex items-center space-x-3 bg-gray-50 rounded p-3"
                 >
                   {/* Imagen del producto */}
                   <img
                     src={item.imagen || item.image}
                     alt={item.nombre || item.name}
-                    className="w-16 h-16 object-cover rounded-lg"
+                    className="w-16 h-16 object-cover rounded"
                   />
                   
                   {/* Información del producto */}
@@ -172,13 +172,13 @@ export default function Cart() {
             <div className="space-y-2">
               <button
                 onClick={handleCheckout}
-                className="w-full btn-primary rounded"
+                className="w-full btn-primary"
               >
                 Finalizar compra
               </button>
               <button
                 onClick={clearCart}
-                className="w-full btn-secondary rounded border-none"
+                className="w-full btn-secondary"
               >
                 Vaciar carrito
               </button>

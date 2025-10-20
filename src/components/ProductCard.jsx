@@ -29,9 +29,9 @@ export default function ProductCard({ product }) {
   };
 
   return (
-    <div className="card group rounded-lg border-none shadow-md">
+    <div className="card group rounded border-none shadow-md">
       {/* Imagen del producto */}
-      <div className="relative overflow-hidden rounded-lg mb-4 bg-gray-100">
+      <div className="relative overflow-hidden rounded mb-3 bg-gray-100" style={{ aspectRatio: '8/9' }}>
         {imageLoading && (
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
@@ -39,7 +39,7 @@ export default function ProductCard({ product }) {
         )}
         
         {imageError ? (
-          <div className="w-full h-48 bg-gray-200 flex items-center justify-center">
+          <div className="w-full h-full bg-gray-200 flex items-center justify-center">
             <svg
               className="w-12 h-12 text-black"
               fill="currentColor"
@@ -52,10 +52,13 @@ export default function ProductCard({ product }) {
           <img
             src={product.imagen}
             alt={product.nombre}
-            className="w-full h-48 object-cover group-hover:scale-105 transition-transform duration-200"
+            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-200"
             onLoad={handleImageLoad}
             onError={handleImageError}
-            style={{ display: imageLoading ? 'none' : 'block' }}
+            style={{ 
+              display: imageLoading ? 'none' : 'block',
+              objectPosition: 'center top'
+            }}
           />
         )}
         
@@ -71,7 +74,7 @@ export default function ProductCard({ product }) {
         {/* Badge de descuento */}
         {product.discount && (
           <div className="absolute top-2 right-2">
-            <span className="bg-red-500 text-white text-xs px-2 py-1 rounded-full">
+            <span className="bg-red-500 text-white text-xs px-2 py-1 rounded">
               -{product.discount}%
             </span>
           </div>
@@ -79,14 +82,14 @@ export default function ProductCard({ product }) {
       </div>
 
       {/* Información del producto */}
-      <div className="space-y-2">
-        <h3 className="font-semibold text-gray-900 text-lg leading-tight">
+      <div className="space-y-1">
+        <h3 className="font-semibold text-gray-900 text-base leading-tight">
           {product.nombre}
         </h3>
         
         {/* Precio */}
         <div className="flex items-center space-x-2 justify-between">
-          <span className="text-lg font-bold text-gray-900">
+          <span className="text-base font-bold text-gray-900">
             ${product.precio}
           </span>
           {product.categoria && (
@@ -98,11 +101,11 @@ export default function ProductCard({ product }) {
       </div>
 
       {/* Botones de acción */}
-      <div className="mt-4 space-y-2">
+      <div className="mt-3 space-y-1.5">
         <button
           onClick={handleBuyNow}
           disabled={product.stock === 0}
-          className={`w-full py-3 px-4 rounded font-medium transition-colors ${
+          className={`w-full py-2 px-3 rounded font-medium transition-colors text-sm ${
             product.stock === 0
               ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
               : ''
@@ -128,26 +131,28 @@ export default function ProductCard({ product }) {
         <button
           onClick={handleAddToCart}
           disabled={product.stock === 0}
-          className={`w-full py-2 px-4 rounded font-medium transition-colors text-sm ${
+          className={`w-full py-1.5 px-3 rounded font-medium transition-colors text-sm ${
             product.stock === 0
               ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
               : ''
           }`}
           style={product.stock !== 0 ? {
             backgroundColor: 'transparent',
-            border: `2px solid ${currentTheme.colors.buttonPrimary}`,
+            border: 'none',
             color: currentTheme.colors.buttonPrimary
           } : {}}
           onMouseEnter={(e) => {
             if (product.stock !== 0) {
               e.target.style.backgroundColor = currentTheme.colors.buttonPrimary;
               e.target.style.color = currentTheme.colors.buttonText;
+              e.target.style.border = 'none';
             }
           }}
           onMouseLeave={(e) => {
             if (product.stock !== 0) {
               e.target.style.backgroundColor = 'transparent';
               e.target.style.color = currentTheme.colors.buttonPrimary;
+              e.target.style.border = 'none';
             }
           }}
         >

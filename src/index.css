@@ -15,15 +15,15 @@
 
 @layer components {
   .btn-primary {
-    @apply bg-black hover:bg-gray-800 text-white font-medium py-3 px-6 rounded-none transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg uppercase tracking-wider;
+    @apply bg-black hover:bg-gray-800 text-white font-medium py-3 px-6 rounded transition-all duration-300 transform hover:scale-105 shadow-md hover:shadow-lg uppercase tracking-wider;
   }
   
   .btn-secondary {
-    @apply bg-white hover:bg-gray-50 text-black font-medium py-3 px-6 rounded-none transition-all duration-300 border-2 border-black uppercase tracking-wider;
+    @apply bg-white hover:bg-gray-50 text-black font-medium py-3 px-6 rounded transition-all duration-300 border-none uppercase tracking-wider;
   }
   
   .card {
-    @apply bg-white rounded-none shadow-sm border border-gray-200 p-4 transition-all duration-300 hover:shadow-xl;
+    @apply bg-white rounded shadow-sm border border-gray-200 p-3 transition-all duration-300 hover:shadow-xl;
   }
 
   .hero-gradient {
