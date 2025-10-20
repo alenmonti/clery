@@ -11,6 +11,20 @@ export default function MobileMenu({ isOpen, onClose }) {
   const [searchQuery, setSearchQuery] = useState("");
   const navigate = useNavigate();
 
+  // Prevenir scroll del body cuando el menú está abierto
+  useEffect(() => {
+    if (isOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    // Cleanup al desmontar el componente
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isOpen]);
+
   useEffect(() => {
     const fetchSections = async () => {
       try {
@@ -91,6 +105,11 @@ export default function MobileMenu({ isOpen, onClose }) {
         className={`fixed top-0 left-0 h-full w-full sm:w-96 md:w-[400px] bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-50 flex flex-col ${
           isOpen ? 'translate-x-0' : '-translate-x-full'
         }`}
+        style={{ 
+          height: '100vh',
+          height: '100dvh', // Para navegadores que soportan dvh
+          backgroundColor: '#ffffff'
+        }}
       >
         {/* Header */}
         <div className="flex items-center justify-between p-4 border-b bg-white">
@@ -110,7 +129,7 @@ export default function MobileMenu({ isOpen, onClose }) {
         </div>
 
         {/* Contenido del menú */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto bg-white">
           {/* Buscador */}
           <div className="p-4 border-b bg-gray-50">
             <h3 className="text-sm font-medium text-gray-700 mb-3">
@@ -136,7 +155,7 @@ export default function MobileMenu({ isOpen, onClose }) {
           </div>
 
           {/* Menú principal */}
-          <div className="p-4">
+          <div className="p-4 bg-white">
             <ul className="space-y-2">
               {/* INICIO */}
               <li>
@@ -324,7 +343,7 @@ export default function MobileMenu({ isOpen, onClose }) {
           </div>
 
           {/* Información de contacto */}
-          <div className="border-t p-4 mt-4">
+          <div className="border-t p-4 mt-4 bg-white">
             <h4 className="text-sm font-medium text-gray-700 mb-4 text-center">Síguenos</h4>
             
             {/* Íconos de redes sociales */}

@@ -1,4 +1,5 @@
 import { useCart } from "../context/CartContext";
+import { useEffect } from "react";
 
 export default function Cart() {
   const {
@@ -10,6 +11,20 @@ export default function Cart() {
     clearCart,
     getCartTotal,
   } = useCart();
+
+  // Prevenir scroll del body cuando el carrito está abierto
+  useEffect(() => {
+    if (isCartOpen) {
+      document.body.style.overflow = 'hidden';
+    } else {
+      document.body.style.overflow = 'unset';
+    }
+    
+    // Cleanup al desmontar el componente
+    return () => {
+      document.body.style.overflow = 'unset';
+    };
+  }, [isCartOpen]);
 
   const handleCheckout = () => {
     // Mensaje para WhatsApp de Cléry
@@ -42,9 +57,14 @@ export default function Cart() {
         className={`fixed top-0 right-0 h-full w-full sm:w-96 md:w-[400px] bg-white shadow-xl transform transition-transform duration-300 ease-in-out z-50 flex flex-col ${
           isCartOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
+        style={{ 
+          height: '100vh',
+          height: '100dvh', // Para navegadores que soportan dvh
+          backgroundColor: '#ffffff'
+        }}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b">
+        <div className="flex items-center justify-between p-4 border-b bg-white">
           <h2 className="text-lg font-semibold text-gray-900">
             Carrito de compras
           </h2>
@@ -63,9 +83,9 @@ export default function Cart() {
         </div>
 
         {/* Contenido del carrito */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto bg-white">
           {cart.length === 0 ? (
-            <div className="flex flex-col items-center justify-center h-full text-gray-500">
+            <div className="flex flex-col items-center justify-center h-full text-gray-500 bg-white">
               <svg
                 className="w-16 h-16 mb-4"
                 fill="currentColor"
@@ -142,7 +162,7 @@ export default function Cart() {
 
         {/* Footer con total y acciones */}
         {cart.length > 0 && (
-          <div className="border-t p-4 space-y-4">
+          <div className="border-t p-4 space-y-4 bg-white">
             {/* Total */}
             <div className="flex justify-between items-center text-lg font-semibold">
               <span>Total:</span>
