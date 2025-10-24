@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { useCart } from "../context/CartContext";
 import { useTheme } from "../context/ThemeContext";
 
@@ -31,7 +32,8 @@ export default function ProductCard({ product }) {
   return (
     <div className="card group rounded border-none shadow-md">
       {/* Imagen del producto */}
-      <div className="relative overflow-hidden rounded mb-3 bg-gray-100" style={{ aspectRatio: '8/9' }}>
+      <Link to={`/clery/product/${product.id}`} className="block">
+        <div className="relative overflow-hidden rounded mb-3 bg-gray-100" style={{ aspectRatio: '4/5' }}>
         {imageLoading && (
           <div className="absolute inset-0 flex items-center justify-center">
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
@@ -105,11 +107,16 @@ export default function ProductCard({ product }) {
           )}
         </div>
       </div>
+      </Link>
 
       {/* Botones de acción */}
       <div className="mt-3 space-y-1.5">
         <button
-          onClick={handleBuyNow}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleBuyNow();
+          }}
           disabled={product.stock === 0}
           className={`w-full py-2 px-3 rounded font-medium transition-colors text-sm ${
             product.stock === 0
@@ -135,7 +142,11 @@ export default function ProductCard({ product }) {
           {product.stock === 0 ? 'Sin stock' : 'COMPRAR'}
         </button>
         <button
-          onClick={handleAddToCart}
+          onClick={(e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleAddToCart();
+          }}
           disabled={product.stock === 0}
           className={`w-full py-1.5 px-3 rounded font-medium transition-colors text-sm ${
             product.stock === 0

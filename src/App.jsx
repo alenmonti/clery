@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
+import ProductDetail from "./pages/ProductDetail";
 import About from "./pages/About";
 import Terms from "./pages/Terms";
 
@@ -20,6 +21,7 @@ function App() {
               <Routes>
                 <Route path="/clery" element={<Home />} />
                 <Route path="/clery/products" element={<Products />} />
+                <Route path="/clery/product/:id" element={<ProductDetail />} />
                 <Route path="/clery/about" element={<About />} />
                 <Route path="/clery/terms" element={<Terms />} />
               </Routes>
