@@ -37,9 +37,7 @@ export default function Terms() {
             <div>
               <h3 className="font-semibold text-gray-900">Entregas Locales:</h3>
               <ul className="space-y-1 ml-4">
-                <li>• <strong>San Miguel y José C. Paz</strong>: Entrega gratuita</li>
-                <li>• <strong>Horarios</strong>: Lunes a viernes de 9:00 a 20:00 hs</li>
-                <li>• <strong>Sábados</strong>: De 9:00 a 17:00 hs</li>
+                <li><strong>Horarios</strong>: Lunes a viernes de 9:00 a 20:00 hs</li>
               </ul>
             </div>
             <div>

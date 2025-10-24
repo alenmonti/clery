@@ -1,39 +1,103 @@
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import { CartProvider } from "./context/CartContext";
 import { ThemeProvider } from "./context/ThemeContext";
+import { AuthProvider } from "./context/AuthContext";
 import Navbar from "./components/Navbar";
 import Cart from "./components/Cart";
+import ProtectedRoute from "./components/ProtectedRoute";
 import Home from "./pages/Home";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import About from "./pages/About";
 import Terms from "./pages/Terms";
 import NotFound from "./pages/NotFound";
+import AdminLogin from "./pages/AdminLogin";
+import AdminDashboard from "./pages/AdminDashboard";
+import ProductForm from "./pages/ProductForm";
 
 function App() {
   return (
-    <CartProvider>
-      <Router>
-        <ThemeProvider>
-          <div className="min-h-screen bg-gray-50">
-            <Navbar />
-            <Cart />
-            <main>
+    <AuthProvider>
+      <CartProvider>
+        <Router>
+          <ThemeProvider>
+            <div className="min-h-screen bg-gray-50">
               <Routes>
-                <Route path="/clery" element={<Home />} />
-                <Route path="/clery/products" element={<Products />} />
-                <Route path="/clery/product/:id" element={<ProductDetail />} />
-                <Route path="/clery/about" element={<About />} />
-                <Route path="/clery/terms" element={<Terms />} />
+                {/* Rutas públicas con layout completo */}
+                <Route path="/clery" element={
+                  <>
+                    <Navbar />
+                    <Cart />
+                    <Home />
+                    <Footer />
+                  </>
+                } />
+                <Route path="/clery/products" element={
+                  <>
+                    <Navbar />
+                    <Cart />
+                    <Products />
+                    <Footer />
+                  </>
+                } />
+                <Route path="/clery/product/:id" element={
+                  <>
+                    <Navbar />
+                    <Cart />
+                    <ProductDetail />
+                    <Footer />
+                  </>
+                } />
+                <Route path="/clery/about" element={
+                  <>
+                    <Navbar />
+                    <Cart />
+                    <About />
+                    <Footer />
+                  </>
+                } />
+                <Route path="/clery/terms" element={
+                  <>
+                    <Navbar />
+                    <Cart />
+                    <Terms />
+                    <Footer />
+                  </>
+                } />
+                
+                {/* Rutas de admin sin el layout principal */}
+                <Route path="/clery/admin/login" element={<AdminLogin />} />
+                <Route path="/clery/admin" element={
+                  <ProtectedRoute>
+                    <AdminDashboard />
+                  </ProtectedRoute>
+                } />
+                <Route path="/clery/admin/producto/nuevo" element={
+                  <ProtectedRoute>
+                    <ProductForm />
+                  </ProtectedRoute>
+                } />
+                <Route path="/clery/admin/producto/editar/:id" element={
+                  <ProtectedRoute>
+                    <ProductForm />
+                  </ProtectedRoute>
+                } />
+                
                 {/* Ruta catch-all para 404 */}
-                <Route path="*" element={<NotFound />} />
+                <Route path="*" element={
+                  <>
+                    <Navbar />
+                    <Cart />
+                    <NotFound />
+                    <Footer />
+                  </>
+                } />
               </Routes>
-            </main>
-            <Footer />
-          </div>
-        </ThemeProvider>
-      </Router>
-    </CartProvider>
+            </div>
+          </ThemeProvider>
+        </Router>
+      </CartProvider>
+    </AuthProvider>
   );
 }
 
