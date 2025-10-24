@@ -8,6 +8,7 @@ import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
 import About from "./pages/About";
 import Terms from "./pages/Terms";
+import NotFound from "./pages/NotFound";
 
 function App() {
   return (
@@ -24,6 +25,8 @@ function App() {
                 <Route path="/clery/product/:id" element={<ProductDetail />} />
                 <Route path="/clery/about" element={<About />} />
                 <Route path="/clery/terms" element={<Terms />} />
+                {/* Ruta catch-all para 404 */}
+                <Route path="*" element={<NotFound />} />
               </Routes>
             </main>
             <Footer />
